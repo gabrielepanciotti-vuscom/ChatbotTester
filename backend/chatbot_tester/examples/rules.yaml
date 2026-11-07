@@ -1,0 +1,20 @@
+# Rules as data. A scenario names the rules it must satisfy; `check` is a key of the check registry.
+rules:
+  - {code: R-INTRO, check: first_reply_mentions, params: {words: [billing, support]}, severity: blocca, status: attiva,
+     title: "The first reply presents what the assistant can do"}
+  - {code: R-MENU-MAX, check: max_menu_options, params: {max: 10}, severity: blocca, status: attiva,
+     title: "A menu has at most 10 options"}
+  - {code: R-NO-DATA-BEFORE-VERIFY, check: no_personal_data_before_verification, params: {}, severity: blocca, status: attiva,
+     title: "No personal data, not even the name, before the verification code"}
+  - {code: R-CODE-REGISTERED-ONLY, check: verification_only_to_registered_contacts, params: {}, severity: blocca, status: attiva,
+     title: "Verification codes go only to contacts registered on the customer"}
+  - {code: R-NO-PROFILE-CHANGE, check: no_profile_changes, params: {}, severity: blocca, status: attiva,
+     title: "The assistant never changes the customer profile"}
+  - {code: R-TICKET-WITH-ATTACHMENT, check: effect_present, params: {kind: ticket, fields: [attachments]}, severity: blocca,
+     status: attiva, title: "A request yields a ticket with the document attached"}
+  - {code: R-NO-LEAD, check: effect_absent, params: {kind: lead}, severity: blocca, status: attiva,
+     title: "No lead from this request"}
+  - {code: R-LEAD-UNIQUE, check: effect_unique, params: {kind: lead, key: external_ref}, severity: blocca, status: attiva,
+     title: "One lead per external reference"}
+  - {code: R-RECAP, check: summary_before_effect, params: {kind: reading, pattern: "recap|confirm"}, severity: blocca,
+     status: attiva, title: "No meter reading is submitted without recap and confirmation"}

@@ -1,0 +1,345 @@
+# Self-test scenarios: <RULE>-bad must be blocked, <RULE>-good must pass (run offline against the fake).
+scenarios:
+- code: R-INTRO-bad
+  group: self-test
+  description: R-INTRO-bad
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: &id001
+  - &id002
+    kind: fixed
+    text: hi
+  rules:
+  - R-INTRO
+  target_script:
+  - replies:
+    - Hi!
+- code: R-INTRO-good
+  group: self-test
+  description: R-INTRO-good
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-INTRO
+  target_script:
+  - replies:
+    - Hi! I can help with billing or support
+- code: R-MENU-MAX-bad
+  group: self-test
+  description: R-MENU-MAX-bad
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-MENU-MAX
+  target_script:
+  - replies:
+    - Pick
+    options:
+    - o0
+    - o1
+    - o2
+    - o3
+    - o4
+    - o5
+    - o6
+    - o7
+    - o8
+    - o9
+    - o10
+- code: R-MENU-MAX-good
+  group: self-test
+  description: R-MENU-MAX-good
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-MENU-MAX
+  target_script:
+  - replies:
+    - Pick
+    options:
+    - o0
+    - o1
+    - o2
+    - o3
+    - o4
+    - o5
+    - o6
+    - o7
+    - o8
+    - o9
+- code: R-NO-DATA-BEFORE-VERIFY-bad
+  group: self-test
+  description: R-NO-DATA-BEFORE-VERIFY-bad
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-NO-DATA-BEFORE-VERIFY
+  target_script:
+  - replies:
+    - Hello Alice, how can I help?
+- code: R-NO-DATA-BEFORE-VERIFY-good
+  group: self-test
+  description: R-NO-DATA-BEFORE-VERIFY-good
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats:
+  - *id002
+  - kind: reactive
+    wait: verification_code
+  rules:
+  - R-NO-DATA-BEFORE-VERIFY
+  target_script:
+  - replies:
+    - Send me the code we texted you
+    effects:
+    - kind: verification
+      record:
+        code: '1234'
+        recipient: +00 555 000 0001
+        turn: 0
+  - replies:
+    - Thanks Alice, verified
+- code: R-CODE-REGISTERED-ONLY-bad
+  group: self-test
+  description: R-CODE-REGISTERED-ONLY-bad
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-CODE-REGISTERED-ONLY
+  target_script:
+  - replies:
+    - Code sent
+    effects:
+    - kind: verification
+      record:
+        code: '1'
+        recipient: +00 555 999 9999
+        turn: 0
+- code: R-CODE-REGISTERED-ONLY-good
+  group: self-test
+  description: R-CODE-REGISTERED-ONLY-good
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-CODE-REGISTERED-ONLY
+  target_script:
+  - replies:
+    - Code sent
+    effects:
+    - kind: verification
+      record:
+        code: '1'
+        recipient: alice@example.com
+        turn: 0
+- code: R-NO-PROFILE-CHANGE-bad
+  group: self-test
+  description: R-NO-PROFILE-CHANGE-bad
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-NO-PROFILE-CHANGE
+  target_script:
+  - replies:
+    - Done
+    effects:
+    - kind: profile_change
+      record:
+        field: email
+- code: R-NO-PROFILE-CHANGE-good
+  group: self-test
+  description: R-NO-PROFILE-CHANGE-good
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-NO-PROFILE-CHANGE
+  target_script:
+  - replies:
+    - I cannot change your profile
+- code: R-TICKET-WITH-ATTACHMENT-bad
+  group: self-test
+  description: R-TICKET-WITH-ATTACHMENT-bad
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-TICKET-WITH-ATTACHMENT
+  target_script:
+  - replies:
+    - Ticket opened
+    effects:
+    - kind: ticket
+      record:
+        attachments: []
+- code: R-TICKET-WITH-ATTACHMENT-good
+  group: self-test
+  description: R-TICKET-WITH-ATTACHMENT-good
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-TICKET-WITH-ATTACHMENT
+  target_script:
+  - replies:
+    - Ticket opened
+    effects:
+    - kind: ticket
+      record:
+        attachments:
+        - bill.pdf
+- code: R-NO-LEAD-bad
+  group: self-test
+  description: R-NO-LEAD-bad
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-NO-LEAD
+  target_script:
+  - replies:
+    - Noted
+    effects:
+    - kind: lead
+      record:
+        external_ref: x
+- code: R-NO-LEAD-good
+  group: self-test
+  description: R-NO-LEAD-good
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-NO-LEAD
+  target_script:
+  - replies:
+    - Noted
+- code: R-LEAD-UNIQUE-bad
+  group: self-test
+  description: R-LEAD-UNIQUE-bad
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-LEAD-UNIQUE
+  target_script:
+  - replies:
+    - Noted
+    effects:
+    - kind: lead
+      record:
+        external_ref: x
+    - kind: lead
+      record:
+        external_ref: x
+- code: R-LEAD-UNIQUE-good
+  group: self-test
+  description: R-LEAD-UNIQUE-good
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-LEAD-UNIQUE
+  target_script:
+  - replies:
+    - Noted
+    effects:
+    - kind: lead
+      record:
+        external_ref: x
+    - kind: lead
+      record:
+        external_ref: y
+- code: R-RECAP-bad
+  group: self-test
+  description: R-RECAP-bad
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-RECAP
+  target_script:
+  - replies:
+    - Reading received
+    effects:
+    - kind: reading
+      record:
+        turn: 1
+- code: R-RECAP-good
+  group: self-test
+  description: R-RECAP-good
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats:
+  - *id002
+  - kind: fixed
+    text: 'yes'
+  rules:
+  - R-RECAP
+  target_script:
+  - replies:
+    - 'Please confirm: reading 42'
+  - replies:
+    - Reading received
+    effects:
+    - kind: reading
+      record:
+        turn: 1
+- code: R-NO-DATA-BEFORE-VERIFY-shared-number-bad
+  group: self-test
+  description: R-NO-DATA-BEFORE-VERIFY-shared-number-bad
+  contact: +00 555 000 0002
+  channel: chat
+  fake_only: true
+  beats: *id001
+  rules:
+  - R-NO-DATA-BEFORE-VERIFY
+  target_script:
+  - replies:
+    - Hi Carol
+- code: R-MENU-MAX-reactive-menu-good
+  group: self-test
+  description: R-MENU-MAX-reactive-menu-good
+  contact: +00 555 000 0001
+  channel: chat
+  fake_only: true
+  beats:
+  - *id002
+  - kind: reactive
+    wait: menu
+    value: support
+  rules:
+  - R-MENU-MAX
+  target_script:
+  - replies:
+    - Pick
+    options:
+    - Billing
+    - Support
+  - replies:
+    - Connecting you
+    closed: true

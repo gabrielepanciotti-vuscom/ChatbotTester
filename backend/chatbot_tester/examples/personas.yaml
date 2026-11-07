@@ -1,0 +1,25 @@
+personas:
+  - case_name: single_number
+    customer_id: "C0001"
+    first_name: Alice
+    last_name: Rossi
+    national_id: AAAAAA00A00A000A
+    phones: ["+00 555 000 0001"]
+    emails: ["alice@example.com"]
+    address: 1 Example Street, Sampletown
+  - case_name: shared_a
+    customer_id: "C0002"
+    first_name: Bob
+    last_name: Verdi
+    national_id: BBBBBB00B00B000B
+    phones: ["+00 555 000 0002"]
+    emails: []
+    address: 2 Test Road, Sampletown
+  - case_name: shared_b
+    customer_id: "C0003"
+    first_name: Carol
+    last_name: Verdi
+    national_id: CCCCCC00C00C000C
+    phones: ["+00 555 000 0002"]
+    emails: []
+    address: 2 Test Road, Sampletown
