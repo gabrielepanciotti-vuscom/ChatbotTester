@@ -1,13 +1,13 @@
 ---
 title: ChatbotTester
-area: Fondamenta comuni
+area: Comunicazione e assistenza
 status: in sviluppo
-updated: 2026-11-19
+updated: 2026-11-20
 ---
 
 ## In una frase
 
-ChatbotTester interpreta un cliente davanti a un assistente conversazionale e restituisce il verdetto standard di collaudo.
+ChatbotTester è il collaudatore di Vicky: interpreta un cliente davanti all'assistente conversazionale e restituisce il verdetto standard di collaudo. Nasce per Vicky e verrà riusato anche in altri progetti Life, ma non fa parte delle fondamenta comuni VUS COM.
 
 ## Il problema che risolve
 
@@ -79,7 +79,7 @@ Al 19/11/2026 non esistono ancora un'interfaccia per lo staff, un'API o un datab
 
 ## Con chi lavora
 
-- **Vicky**: è il primo utilizzatore specifico da cui deriva il collaudatore generale.
+- **Vicky**: è il progetto a cui appartiene; ChatbotTester ne collauda l'assistente.
 - **L'istanza che usa ChatbotTester**: fornisce scenari, regole, persone fittizie e adattatore dell'assistente.
 - **Il servizio di linguaggio della piattaforma Life**: può proporre messaggi del cliente e valutare regole testuali.
 - **Fornitori esterni**: nessuno è collegato direttamente dal motore generico.
