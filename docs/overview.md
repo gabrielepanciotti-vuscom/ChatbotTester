@@ -1,6 +1,6 @@
 ---
 title: ChatbotTester
-area: Comunicazione e assistenza
+area: Marketing e vendita
 status: in sviluppo
 updated: 2026-11-20
 ---
